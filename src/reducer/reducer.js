@@ -1,4 +1,4 @@
-export const initialState = { username: "bob" };
+export const initialState = { username: "" };
 
 export const reducer = function reducer(state, action) {
   switch (action.type) {

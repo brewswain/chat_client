@@ -7,8 +7,12 @@ import { initialState, reducer } from "../../reducer/reducer";
 
 import "./username-form.styles.scss";
 
-const UsernameForm = ({ history }) => {
+const UsernameForm = ({ history, userNameData }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    localStorage.setItem("persistedUserName", JSON.stringify(state));
+  });
 
   return (
     <div className="form-container">
