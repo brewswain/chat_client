@@ -1,0 +1,24 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 300px;
+  background: rgb(100, 100, 100);
+  font-size: 1.7rem;
+  border-radius: 4px;
+
+  .form-input {
+    background: none;
+    border: none;
+    border-bottom: 2px solid grey;
+    font-size: 1.5rem;
+    margin-left: 10px;
+
+    &:focus {
+      outline: none;
+      background: none;
+    }
+  }
+}
