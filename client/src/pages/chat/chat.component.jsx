@@ -3,20 +3,17 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import io from "socket.io-client";
 
-import { initialState, reducer } from "../../reducer/reducer";
-
 import ChatBox from "../../components/chat-box/chat-box.component";
 
 import "./chat.styles.scss";
-import HomePage from "../home/home.component";
 
-const ChatPage = ({ userNameData }) => {
+const ChatPage = () => {
   const retrievedUserData = localStorage.getItem("persistedUserName");
   const parsedUserData = JSON.parse(retrievedUserData);
 
   useEffect(() => {
     const socket = io();
-    socket.on("message", message => {
+    socket.on("message", (message) => {
       console.log(message);
     });
   }, []);
