@@ -1,6 +1,7 @@
-import React, { useReducer } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import io from "socket.io-client";
 
 import { initialState, reducer } from "../../reducer/reducer";
 
@@ -12,6 +13,13 @@ import HomePage from "../home/home.component";
 const ChatPage = ({ userNameData }) => {
   const retrievedUserData = localStorage.getItem("persistedUserName");
   const parsedUserData = JSON.parse(retrievedUserData);
+
+  useEffect(() => {
+    const socket = io();
+    socket.on("message", message => {
+      console.log(message);
+    });
+  }, []);
 
   return (
     <div className="chatpage-container">
