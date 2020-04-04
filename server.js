@@ -9,18 +9,16 @@ const io = socketio(server);
 
 app.use(express.static(path.join(__dirname, "client/build")));
 
-io.on("connection", socket => {
+io.on("connection", (socket) => {
   socket.emit("message", "Welcome to our chat!");
 
   // broadcast to everybody but the client that connects
   socket.broadcast.emit("message", "A user has connected to the chat");
 
   socket.on("disconnect", () => {
+    //io.emit is a global broadcast method
     io.emit("message", "A user has disconnected");
   });
-
-  // global broadcast method
-  // io.emit;
 });
 
 const PORT = 3000 || process.env.PORT;
