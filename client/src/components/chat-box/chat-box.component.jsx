@@ -7,8 +7,9 @@ const ChatBox = () => {
   const parsedUserData = JSON.parse(userNameData);
 
   const handleKeyPress = (event) => {
+    const msg = event.target.value;
     if (event.key === "Enter") {
-      console.log("I fired");
+      console.log(msg);
     }
   };
   return (
