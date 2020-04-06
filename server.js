@@ -8,6 +8,9 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 app.use(express.static(path.join(__dirname, "client/build")));
+app.get("*", function (req, res) {
+  res.sendfile("./client/build/index.html");
+});
 
 io.on("connection", (socket) => {
   socket.emit("message", "Welcome to our chat!");
