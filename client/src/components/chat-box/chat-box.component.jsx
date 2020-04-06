@@ -5,6 +5,12 @@ import "./chat-box.styles.scss";
 const ChatBox = () => {
   const userNameData = localStorage.getItem("persistedUserName");
   const parsedUserData = JSON.parse(userNameData);
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      console.log("I fired");
+    }
+  };
   return (
     <div className="chat-box">
       <div className="chat-body">
@@ -21,7 +27,13 @@ const ChatBox = () => {
         </div>
       </div>
       <div className="input-container">
-        <input type="text" className="chat-input" />
+        <input
+          type="text"
+          className="chat-input"
+          id="message"
+          placeholder="Type a message"
+          onKeyPress={handleKeyPress}
+        />
       </div>
     </div>
   );

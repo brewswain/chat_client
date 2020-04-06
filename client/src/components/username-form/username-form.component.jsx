@@ -1,8 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 
-import CustomButton from "../custom-button/custom-button.component";
-
 import { initialState, reducer } from "../../reducer/reducer";
 
 import "./username-form.styles.scss";
@@ -14,6 +12,14 @@ const UsernameForm = ({ history, userNameData }) => {
     localStorage.setItem("persistedUserName", JSON.stringify(state));
   });
 
+  const handleKeyPress = async (event) => {
+    if (event.key === "Enter") {
+      await dispatch({ type: "SET_USERNAME", payload: event.target.value });
+      history.push("/chat");
+      console.log("you pressed enter!");
+    }
+  };
+
   return (
     <div className="form-container">
       <div className="form-information">
@@ -23,19 +29,12 @@ const UsernameForm = ({ history, userNameData }) => {
           name="username"
           id="username"
           class="form-input"
-          onBlur={event =>
-            dispatch({ type: "SET_USERNAME", payload: event.target.value })
-          }
+          onKeyPress={handleKeyPress}
+          placeholder="Please enter name"
           required
-        />{" "}
+        />
+        {""}
       </div>
-      <CustomButton
-        onClick={() => {
-          history.push("/chat");
-        }}
-      >
-        Join Chat
-      </CustomButton>
     </div>
   );
 };
