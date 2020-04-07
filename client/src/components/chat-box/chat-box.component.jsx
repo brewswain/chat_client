@@ -1,15 +1,18 @@
 import React from "react";
 
+import io from "socket.io-client";
+
 import "./chat-box.styles.scss";
 
 const ChatBox = () => {
   const userNameData = localStorage.getItem("persistedUserName");
   const parsedUserData = JSON.parse(userNameData);
+  const socket = io();
 
   const handleKeyPress = (event) => {
     const msg = event.target.value;
     if (event.key === "Enter") {
-      console.log(msg);
+      socket.emit("chatMessage", msg);
     }
   };
   return (
