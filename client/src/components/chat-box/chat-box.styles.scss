@@ -11,6 +11,10 @@
   display: grid;
   grid-template-columns: 5fr 1fr;
 
+  .chat-log {
+    padding-top: 20px;
+  }
+
   .user-list {
     background: rgb(65, 65, 65);
     display: flex;

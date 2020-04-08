@@ -1,0 +1,30 @@
+.message-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 25px;
+
+  .message-header {
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+
+    .message-name {
+      padding-right: 20px;
+      font-size: 1.1rem;
+      color: white;
+    }
+
+    .message-timestamp {
+      font-size: 0.8rem;
+      color: rgba(241, 241, 241, 0.6);
+    }
+  }
+
+  .message-content {
+    color: rgb(235, 235, 235);
+    text-align: justify;
+    padding: 0 30px;
+  }
+}

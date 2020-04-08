@@ -1,5 +1,7 @@
 import React from "react";
 
+import MessageBox from "../message-box/message-box.component";
+
 import io from "socket.io-client";
 
 import "./chat-box.styles.scss";
@@ -18,7 +20,11 @@ const ChatBox = () => {
   return (
     <div className="chat-box">
       <div className="chat-body">
-        <div className="chat-log">Beep</div>
+        <div className="chat-log">
+          <MessageBox />
+
+          <MessageBox />
+        </div>
         <div className="user-list">
           <div className="user-list-header">Users</div>
           <div className="user-list-names">

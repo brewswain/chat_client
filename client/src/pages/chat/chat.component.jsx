@@ -15,8 +15,11 @@ const ChatPage = () => {
     const socket = io();
     socket.on("message", (message) => {
       console.log(message);
+      outputMessage(message);
     });
   }, []);
+
+  const outputMessage = (message) => {};
 
   return (
     <div className="chatpage-container">
