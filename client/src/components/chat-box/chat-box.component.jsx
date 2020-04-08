@@ -6,10 +6,15 @@ import io from "socket.io-client";
 
 import "./chat-box.styles.scss";
 
-const ChatBox = () => {
-  const userNameData = localStorage.getItem("persistedUserName");
-  const parsedUserData = JSON.parse(userNameData);
+const ChatBox = ({ parsedUserData }) => {
   const socket = io();
+
+  socket.on("message", (message) => {
+    console.log(message);
+    outputMessage(message);
+  });
+
+  const outputMessage = (message) => {};
 
   const handleKeyPress = (event) => {
     const msg = event.target.value;
@@ -21,9 +26,9 @@ const ChatBox = () => {
     <div className="chat-box">
       <div className="chat-body">
         <div className="chat-log">
-          <MessageBox />
+          <MessageBox parsedUserData={parsedUserData} />
 
-          <MessageBox />
+          <MessageBox parsedUserData={parsedUserData} />
         </div>
         <div className="user-list">
           <div className="user-list-header">Users</div>

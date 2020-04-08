@@ -2,10 +2,10 @@ import React from "react";
 
 import "./message-box.styles.scss";
 
-const MessageBox = () => (
+const MessageBox = ({ parsedUserData }) => (
   <div className="message-box">
     <div className="message-header">
-      <div className="message-name">Name</div>
+      <div className="message-name">{parsedUserData.username}</div>
       <div className="message-timestamp">timestamp</div>
     </div>
     <div className="message-content">

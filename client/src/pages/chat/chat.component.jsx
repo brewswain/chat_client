@@ -11,16 +11,6 @@ const ChatPage = () => {
   const retrievedUserData = localStorage.getItem("persistedUserName");
   const parsedUserData = JSON.parse(retrievedUserData);
 
-  useEffect(() => {
-    const socket = io();
-    socket.on("message", (message) => {
-      console.log(message);
-      outputMessage(message);
-    });
-  }, []);
-
-  const outputMessage = (message) => {};
-
   return (
     <div className="chatpage-container">
       <h1 className="chatpage-title">
@@ -42,7 +32,7 @@ const ChatPage = () => {
           </Link>
         </span>
       </h1>
-      <ChatBox />
+      <ChatBox parsedUserData={parsedUserData} />
     </div>
   );
 };
