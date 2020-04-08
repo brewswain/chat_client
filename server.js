@@ -16,11 +16,11 @@ io.on("connection", (socket) => {
   socket.emit("welcome", "Welcome to our chat!");
 
   // broadcast to everybody but the client that connects
-  socket.broadcast.emit("message", "A user has connected to the chat");
+  socket.broadcast.emit("userJoined", "A user has connected to the chat");
 
   socket.on("disconnect", () => {
     //io.emit is a global broadcast method
-    io.emit("message", "A user has disconnected");
+    io.emit("userLeft", "A user has disconnected");
   });
 
   socket.on("chatMessage", (msg) => {
