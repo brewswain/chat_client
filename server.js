@@ -13,7 +13,7 @@ app.get("*", function (req, res) {
 });
 
 io.on("connection", (socket) => {
-  socket.emit("message", "Welcome to our chat!");
+  socket.emit("welcome", "Welcome to our chat!");
 
   // broadcast to everybody but the client that connects
   socket.broadcast.emit("message", "A user has connected to the chat");
@@ -21,6 +21,10 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     //io.emit is a global broadcast method
     io.emit("message", "A user has disconnected");
+  });
+
+  socket.on("chatMessage", (msg) => {
+    io.emit("message", msg);
   });
 });
 

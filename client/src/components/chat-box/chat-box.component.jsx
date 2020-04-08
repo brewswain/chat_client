@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import MessageBox from "../message-box/message-box.component";
 
@@ -7,14 +7,25 @@ import io from "socket.io-client";
 import "./chat-box.styles.scss";
 
 const ChatBox = ({ parsedUserData }) => {
+  const [messageBody, setMessageBody] = useState("");
+
   const socket = io();
+
+  socket.on("welcome", (welcome) => {
+    console.log(welcome);
+  });
 
   socket.on("message", (message) => {
     console.log(message);
     outputMessage(message);
   });
 
-  const outputMessage = (message) => {};
+  const outputMessage = async (message) => {
+    if (message) {
+      setMessageBody("hello");
+    }
+    return;
+  };
 
   const handleKeyPress = (event) => {
     const msg = event.target.value;
@@ -26,9 +37,10 @@ const ChatBox = ({ parsedUserData }) => {
     <div className="chat-box">
       <div className="chat-body">
         <div className="chat-log">
-          <MessageBox parsedUserData={parsedUserData} />
-
-          <MessageBox parsedUserData={parsedUserData} />
+          {/* <MessageBox
+            parsedUserData={parsedUserData}
+          /> */}
+          {messageBody}
         </div>
         <div className="user-list">
           <div className="user-list-header">Users</div>
