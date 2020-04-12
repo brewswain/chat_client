@@ -9,20 +9,32 @@ import "./chat-box.styles.scss";
 const ChatBox = ({ parsedUserData }) => {
   const [messageBody, setMessageBody] = useState("");
 
+  let chatMessages = [];
+
   const socket = io();
 
   socket.on("welcome", (welcome) => {
     console.log(welcome);
   });
 
+  socket.on("userJoined", (userJoined) => {
+    console.log(userJoined);
+
+    socket.on("userLeft", (userLeft) => {
+      console.log(userLeft);
+    });
+  });
+
   socket.on("message", (message) => {
+    setMessageBody(message);
     console.log(message);
     outputMessage(message);
   });
 
   const outputMessage = async (message) => {
     if (message) {
-      setMessageBody("hello");
+      chatMessages.push(message);
+      console.log(chatMessages);
     }
     return;
   };
@@ -37,10 +49,10 @@ const ChatBox = ({ parsedUserData }) => {
     <div className="chat-box">
       <div className="chat-body">
         <div className="chat-log">
-          {/* <MessageBox
+          <MessageBox
             parsedUserData={parsedUserData}
-          /> */}
-          {messageBody}
+            messageBody={messageBody}
+          />
         </div>
         <div className="user-list">
           <div className="user-list-header">Users</div>

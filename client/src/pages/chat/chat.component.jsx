@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import io from "socket.io-client";
 
 import ChatBox from "../../components/chat-box/chat-box.component";
 
