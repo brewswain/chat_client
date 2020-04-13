@@ -33,8 +33,9 @@ const ChatBox = ({ parsedUserData }) => {
 
   const outputMessage = async (message) => {
     if (message) {
-      chatMessages.push(message);
-      console.log(chatMessages);
+      // chatMessages.push(message);
+      // console.log(chatMessages);
+      await setMessageBody(message);
     }
     return;
   };
