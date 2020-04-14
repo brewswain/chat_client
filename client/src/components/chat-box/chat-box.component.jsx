@@ -7,7 +7,7 @@ import io from "socket.io-client";
 import "./chat-box.styles.scss";
 
 const ChatBox = ({ parsedUserData }) => {
-  const [messageBody, setMessageBody] = useState("");
+  const [messageBody, setMessageBody] = useState([]);
 
   let chatMessages = [];
 
@@ -25,20 +25,25 @@ const ChatBox = ({ parsedUserData }) => {
     });
   });
 
-  socket.on("message", (message) => {
-    setMessageBody(message);
-    console.log(message);
-    outputMessage(message);
+  socket.on("message", async (message) => {
+    await setMessageBody([
+      ...messageBody,
+      {
+        id: messageBody.length,
+        value: message,
+      },
+    ]);
+    console.log(messageBody);
+    // console.log(message);
+    // outputMessage(message);
+    // chatMessages.push(message);
   });
 
-  const outputMessage = async (message) => {
-    if (message) {
-      // chatMessages.push(message);
-      // console.log(chatMessages);
-      await setMessageBody(message);
-    }
-    return;
-  };
+  // const outputMessage = async (message) => {
+  //   if (message) {
+  //   }
+  //   return;
+  // };
 
   const handleKeyPress = (event) => {
     const msg = event.target.value;
@@ -50,10 +55,13 @@ const ChatBox = ({ parsedUserData }) => {
     <div className="chat-box">
       <div className="chat-body">
         <div className="chat-log">
-          <MessageBox
-            parsedUserData={parsedUserData}
-            messageBody={messageBody}
-          />
+          {messageBody.map((msg) => (
+            <MessageBox
+              parsedUserData={parsedUserData}
+              messageBody={messageBody.value}
+              key={messageBody.id}
+            />
+          ))}
         </div>
         <div className="user-list">
           <div className="user-list-header">Users</div>
