@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import MessageBox from "../message-box/message-box.component";
 
@@ -8,8 +8,6 @@ import "./chat-box.styles.scss";
 
 const ChatBox = ({ parsedUserData }) => {
   const [messageBody, setMessageBody] = useState([]);
-
-  let chatMessages = [];
 
   const socket = io();
 
@@ -25,25 +23,18 @@ const ChatBox = ({ parsedUserData }) => {
     });
   });
 
-  socket.on("message", async (message) => {
-    await setMessageBody([
-      ...messageBody,
-      {
-        id: messageBody.length,
-        value: message,
-      },
-    ]);
-    console.log(messageBody);
-    // console.log(message);
-    // outputMessage(message);
-    // chatMessages.push(message);
-  });
-
-  // const outputMessage = async (message) => {
-  //   if (message) {
-  //   }
-  //   return;
-  // };
+  useEffect(() => {
+    socket.on("message", async (message) => {
+      await setMessageBody([
+        ...messageBody,
+        {
+          id: messageBody.length,
+          value: message,
+        },
+      ]);
+      console.log(messageBody);
+    });
+  }, [messageBody, socket]);
 
   const handleKeyPress = (event) => {
     const msg = event.target.value;
@@ -58,8 +49,8 @@ const ChatBox = ({ parsedUserData }) => {
           {messageBody.map((msg) => (
             <MessageBox
               parsedUserData={parsedUserData}
-              messageBody={messageBody.value}
-              key={messageBody.id}
+              messageBody={msg.value}
+              key={msg.id}
             />
           ))}
         </div>
