@@ -26,6 +26,11 @@ io.on("connection", (socket) => {
   socket.on("chatMessage", (msg) => {
     io.emit("message", msg);
   });
+
+  socket.on("userName", (clientUserName) => {
+    const socketUserName = clientUserName;
+    io.emit("userName", socketUserName);
+  });
 });
 
 const PORT = 3000 || process.env.PORT;

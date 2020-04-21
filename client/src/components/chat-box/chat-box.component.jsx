@@ -8,11 +8,15 @@ import "./chat-box.styles.scss";
 
 const ChatBox = ({ parsedUserData }) => {
   const [messageBody, setMessageBody] = useState([]);
+  const [serverUserName, setServerUserName] = useState("");
+
+  const clientUserName = parsedUserData.username;
+  let isClient = true;
 
   const socket = io();
 
   socket.on("welcome", (welcome) => {
-    console.log(welcome);
+    // console.log(welcome);
   });
 
   socket.on("userJoined", (userJoined) => {
@@ -24,31 +28,48 @@ const ChatBox = ({ parsedUserData }) => {
   });
 
   useEffect(() => {
-    socket.on("message", async (message) => {
-      await setMessageBody([
+    socket.on("message", (message) => {
+      setMessageBody([
         ...messageBody,
         {
           id: messageBody.length,
           value: message,
         },
       ]);
-      console.log(messageBody);
     });
   }, [messageBody, socket]);
+
+  useEffect(() => {
+    socket.on("userName", (socketUserName) => {
+      if ((socketUserName = clientUserName)) {
+        setServerUserName(socketUserName);
+        return;
+      } else {
+        isClient = false;
+        return;
+      }
+    });
+  }, [serverUserName, socket]);
 
   const handleKeyPress = (event) => {
     const msg = event.target.value;
     if (event.key === "Enter") {
-      socket.emit("chatMessage", msg);
+      socket.emit("chatMessage", msg) &&
+        socket.emit("userName", clientUserName);
+
+      isClient = true;
     }
   };
+
   return (
     <div className="chat-box">
       <div className="chat-body">
         <div className="chat-log">
           {messageBody.map((msg) => (
             <MessageBox
-              parsedUserData={parsedUserData}
+              serverUserName={serverUserName}
+              clientUserName={clientUserName}
+              isClient={isClient}
               messageBody={msg.value}
               key={msg.id}
             />

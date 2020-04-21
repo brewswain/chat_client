@@ -2,11 +2,18 @@ import React from "react";
 
 import "./message-box.styles.scss";
 
-const MessageBox = ({ parsedUserData, messageBody }) => (
+const MessageBox = ({
+  serverUserName,
+  messageBody,
+  clientUserName,
+  isClient,
+}) => (
   <div className="message-box">
     {messageBody ? (
       <div className="message-header">
-        <div className="message-name">{parsedUserData.username}</div>
+        <div className="message-name">
+          {isClient ? serverUserName : clientUserName}
+        </div>
         <div className="message-timestamp">timestamp</div>
       </div>
     ) : null}
