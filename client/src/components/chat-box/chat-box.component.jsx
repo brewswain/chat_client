@@ -8,10 +8,8 @@ import "./chat-box.styles.scss";
 
 const ChatBox = ({ parsedUserData }) => {
   const [messageBody, setMessageBody] = useState([]);
-  const [serverUserName, setServerUserName] = useState("");
 
   const clientUserName = parsedUserData.username;
-  let isClient = true;
 
   const socket = io();
 
@@ -33,31 +31,19 @@ const ChatBox = ({ parsedUserData }) => {
         ...messageBody,
         {
           id: messageBody.length,
-          value: message,
+          value: message.clientMessage,
+          name: message.name,
         },
       ]);
+      console.log(message);
     });
+    console.log(messageBody);
   }, [messageBody, socket]);
-
-  useEffect(() => {
-    socket.on("userName", (socketUserName) => {
-      if ((socketUserName = clientUserName)) {
-        setServerUserName(socketUserName);
-        return;
-      } else {
-        isClient = false;
-        return;
-      }
-    });
-  }, [serverUserName, socket]);
 
   const handleKeyPress = (event) => {
     const msg = event.target.value;
     if (event.key === "Enter") {
-      socket.emit("chatMessage", msg) &&
-        socket.emit("userName", clientUserName);
-
-      isClient = true;
+      socket.emit("chatMessage", { clientMessage: msg, name: clientUserName });
     }
   };
 
@@ -65,13 +51,11 @@ const ChatBox = ({ parsedUserData }) => {
     <div className="chat-box">
       <div className="chat-body">
         <div className="chat-log">
-          {messageBody.map((msg) => (
+          {messageBody.map((serverMessage) => (
             <MessageBox
-              serverUserName={serverUserName}
-              clientUserName={clientUserName}
-              isClient={isClient}
-              messageBody={msg.value}
-              key={msg.id}
+              serverUserName={serverMessage.name}
+              messageBody={serverMessage.value}
+              key={serverMessage.id}
             />
           ))}
         </div>
