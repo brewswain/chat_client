@@ -16,7 +16,6 @@ const UsernameForm = ({ history, userNameData }) => {
     if (event.key === "Enter") {
       await dispatch({ type: "SET_USERNAME", payload: event.target.value });
       history.push("/chat");
-      console.log("you pressed enter!");
     }
   };
 
